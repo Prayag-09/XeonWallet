@@ -1,1 +1,1 @@
-# VaultNova - Simple , Secure Wallet
+# XeonWallet - Simple , Secure Wallet
