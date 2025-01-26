@@ -15,7 +15,7 @@ const Card = ({ className, title, children, href }: cardInterfcae) => {
 			<h2 className='text-sm'>
 				{title} <span>-&gt;</span>
 			</h2>
-			<p>{children}</p>
+			<span>{children}</span>
 		</a>
 	);
 };

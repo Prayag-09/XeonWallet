@@ -1,4 +1,4 @@
-import { Button } from "./CustomButton";
+import CustomButton  from "./CustomButton";
 
 interface AppbarProps {
     user?: {
@@ -18,7 +18,7 @@ export const Appbar = ({
             PayTM
         </div>
         <div className="flex flex-col justify-center pt-2">
-            <Button onClick={user ? onSignout : onSignin}>{user ? "Logout" : "Login"}</Button>
+            <CustomButton onClick={user ? onSignout : onSignin}>{user ? "Logout" : "Login"}</CustomButton>
         </div>
     </div>
 }
