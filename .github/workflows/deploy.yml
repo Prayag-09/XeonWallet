@@ -27,4 +27,16 @@ jobs:
           tags: prayag09/xeon-wallet:latest
 
       - name: Verify Pushed Image
-        run: docker pull  prayag09/xeon-wallet:latest
+        run: docker pull prayag09/xeon-wallet:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo docker pull prayag09/xeon-wallet:latest
+            sudo docker stop xeon-wallet || true
+            sudo docker rm xeon-wallet || true
+            sudo docker run -d --name xeon-wallet -p 3005:3000 prayag09/xeon-wallet:latest
