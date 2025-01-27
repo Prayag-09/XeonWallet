@@ -1,7 +1,9 @@
-import { SendCard } from "../../../components/SendCard";
+import { SendCard } from '../../../components/SendCard';
 
-export default function() {
-    return <div className="w-full">
-        <SendCard />
-    </div>
+export default function () {
+	return (
+		<div className='w-full'>
+			<SendCard />
+		</div>
+	);
 }
