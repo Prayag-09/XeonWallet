@@ -18,49 +18,55 @@ const SUPPORTED_BANKS = [
 ];
 
 export const AddMoney = () => {
-	const [redirectUrl, setRedirectUrl] = useState(
-		SUPPORTED_BANKS[0]?.redirectUrl
-	);
-	const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name || '');
-	const [value, setValue] = useState(0);
+	const [selectedBank, setSelectedBank] = useState(SUPPORTED_BANKS[0]);
+	const [amount, setAmount] = useState<number | null>(null);
+
+	const handleAddMoney = async () => {
+		if (!amount || amount <= 0) {
+			alert('Please enter a valid amount.');
+			return;
+		}
+		try {
+			if (selectedBank) {
+				await createOnRampTransaction(selectedBank.name, amount * 100);
+			} else {
+				alert('Please select a bank.');
+				return;
+			}
+			if (selectedBank) {
+				window.location.href = selectedBank.redirectUrl;
+			} else {
+				alert('Please select a bank.');
+			}
+		} catch (error) {
+			console.error('Error creating transaction:', error);
+			alert('Failed to create transaction. Please try again.');
+		}
+	};
+
 	return (
-		<Card title='Add Money'>
-			<div className='w-full'>
+		<Card title="Add Money">
+			<div className="w-full">
 				<TextInput
-					label={'Amount'}
-					placeholder={'Amount'}
-					onChange={(val) => {
-						setValue(Number(val));
-					}}
+					label="Amount"
+					placeholder="Enter amount"
+					onChange={(val) => setAmount(Number(val))}
 				/>
-				<div className='py-4 text-left'>Bank</div>
+				<div className="py-4 text-left">Bank</div>
 				<Select
 					onSelect={(value) => {
-						setRedirectUrl(
-							SUPPORTED_BANKS.find((x) => x.name === value)?.redirectUrl || ''
-						);
-						setProvider(
-							SUPPORTED_BANKS.find((x) => x.name === value)?.name || ''
-						);
+						const bank = SUPPORTED_BANKS.find((x) => x.name === value);
+						if (bank) {
+							setSelectedBank(bank);
+						}
 					}}
-					options={SUPPORTED_BANKS.map((x) => ({
-						key: x.name,
-						value: x.name,
+					options={SUPPORTED_BANKS.map((bank) => ({
+						key: bank.name,
+						value: bank.name,
 					}))}
 				/>
-				<div className='flex justify-center pt-4'>
-					<Button
-						onClick={async () => {
-							try {
-								const res = await createOnRampTransaction(provider, value);
-
-								window.location.href = redirectUrl || '';
-							} catch (e) {
-								alert('No Amount');
-							}
-						}}>
-						Add Money
-					</Button>
+				<div className="flex justify-center pt-4">
+					<Button onClick={handleAddMoney}>Add Money</Button>
 				</div>
 			</div>
 		</Card>
