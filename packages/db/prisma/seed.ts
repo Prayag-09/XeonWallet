@@ -12,8 +12,8 @@ async function main() {
 			name: 'prayag',
 			Balance: {
 				create: {
-					amount: 20000,
-					locked: 0,
+					amount: 2000,
+					locked: 15000,
 				},
 			},
 			OnRampTransaction: {
@@ -37,14 +37,14 @@ async function main() {
 			Balance: {
 				create: {
 					amount: 15000,
-					locked: 0,
+					locked: 25000,
 				},
 			},
 			OnRampTransaction: {
 				create: {
 					startTime: new Date(),
 					status: 'Failure',
-					amount: 2000,
+					amount: 20000,
 					token: 'token__2',
 					provider: 'HDFC Bank',
 				},

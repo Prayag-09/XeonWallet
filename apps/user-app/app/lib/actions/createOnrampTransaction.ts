@@ -9,27 +9,47 @@ export async function createOnRampTransaction(
 	amount: number
 ) {
 	const session = await getServerSession(authOptions);
+
 	if (!session?.user || !session.user?.id) {
 		return {
 			message: 'Unauthenticated request',
 		};
 	}
 
-	if (!amount) throw new Error('Invalid Amount');
+	if (!amount || amount <= 0) {
+		throw new Error('Invalid Amount');
+	}
 
-	const token = (Math.random() * 1000).toString();
-	await prisma.onRampTransaction.create({
-		data: {
-			provider,
-			status: 'Processing',
-			startTime: new Date(),
-			token: token,
-			userId: Number(session?.user?.id),
-			amount: amount * 100,
-		},
-	});
+	try {
+		const token = (Math.random() * 1000000).toFixed(0);
 
-	return {
-		message: 'Done',
-	};
+		await prisma.onRampTransaction.create({
+			data: {
+				provider,
+				status: 'Processing',
+				startTime: new Date(),
+				token: token,
+				userId: Number(session.user.id),
+				amount,
+			},
+		});
+
+		await prisma.balance.update({
+			where: {
+				userId: Number(session.user.id),
+			},
+			data: {
+				amount: {
+					increment: amount,
+				},
+			},
+		});
+
+		return {
+			message: 'Transaction created successfully and balance updated',
+			token,
+		};
+	} catch (error) {
+		console.error('Error creating on-ramp transaction:', error);
+	}
 }

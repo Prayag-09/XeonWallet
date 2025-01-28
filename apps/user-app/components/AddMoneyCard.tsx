@@ -26,17 +26,15 @@ export const AddMoney = () => {
 			alert('Please enter a valid amount.');
 			return;
 		}
+
 		try {
 			if (selectedBank) {
 				await createOnRampTransaction(selectedBank.name, amount * 100);
 			} else {
 				alert('Please select a bank.');
-				return;
 			}
 			if (selectedBank) {
 				window.location.href = selectedBank.redirectUrl;
-			} else {
-				alert('Please select a bank.');
 			}
 		} catch (error) {
 			console.error('Error creating transaction:', error);
@@ -45,27 +43,29 @@ export const AddMoney = () => {
 	};
 
 	return (
-		<Card title="Add Money">
-			<div className="w-full">
+		<Card title='Add Money'>
+			<div className='w-full'>
 				<TextInput
-					label="Amount"
-					placeholder="Enter amount"
-					onChange={(val) => setAmount(Number(val))}
+					label='Amount'
+					placeholder='Enter amount'
+					aria-label='Enter amount'
+					onChange={(val) => {
+						const parsedAmount = parseFloat(val);
+						setAmount(isNaN(parsedAmount) ? null : parsedAmount);
+					}}
 				/>
-				<div className="py-4 text-left">Bank</div>
+				<div className='py-4 text-left'>Bank</div>
 				<Select
 					onSelect={(value) => {
 						const bank = SUPPORTED_BANKS.find((x) => x.name === value);
-						if (bank) {
-							setSelectedBank(bank);
-						}
+						if (bank) setSelectedBank(bank);
 					}}
 					options={SUPPORTED_BANKS.map((bank) => ({
 						key: bank.name,
 						value: bank.name,
 					}))}
 				/>
-				<div className="flex justify-center pt-4">
+				<div className='flex justify-center pt-4'>
 					<Button onClick={handleAddMoney}>Add Money</Button>
 				</div>
 			</div>
