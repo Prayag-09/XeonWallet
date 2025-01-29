@@ -2,6 +2,12 @@
 
 XeonWallet is a cutting-edge digital wallet that prioritizes simplicity and security. With a streamlined user experience and top-tier performance, XeonWallet is built to scale. This project leverages modern DevOps practices, including Docker, CI/CD pipelines, and AWS deployment, to ensure seamless development, testing, and production environments.
 
+## Project Preview
+
+You can watch the project preview by clicking the link below:
+
+[Watch the video](./public/video.mp4)
+
 ## 🌟 Key Features
 
 - **Simplicity**: An easy-to-use wallet interface for efficient management of your digital assets.
