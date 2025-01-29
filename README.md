@@ -10,6 +10,7 @@ You can watch the project preview by clicking the link below:
   <source src="./public/videopreview.mov" type="video/quicktime">
   Your browser does not support the video tag.
 </video>
+
 ## 🌟 Key Features
 
 - **Simplicity**: An easy-to-use wallet interface for efficient management of your digital assets.
