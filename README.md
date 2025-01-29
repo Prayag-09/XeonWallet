@@ -6,7 +6,7 @@ XeonWallet is a cutting-edge digital wallet that prioritizes simplicity and secu
 
 You can watch the project preview by clicking the link below:
 
-[Watch the video](./public/video.mp4)
+[Watch the video](./public/videopreview.mov)
 
 ## 🌟 Key Features
 
